@@ -42,6 +42,7 @@ class Database
 			if ($e->getCode() === 1049) {
 				try {
 					$this->pdo = new PDO('mysql:host='.DBase::$host, DBase::$user, DBase::$pass);
+                    $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				} catch (PDOException $q) {
 					DBase::$msg = 'Error: ' . $q->getMessage();
 					exit(DBase::$msg);
@@ -189,33 +190,34 @@ class Database
 	private function propagateTable(string $table)
 	{
 		$sql = "
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Gabriel James', 'Gabriel_James7570@acrit.org', 'Time Management', 'completed');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Danny Smith', 'Danny_Smith2221@yahoo.com', 'Time Management', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Juliette Walker', 'Juliette_Walker4851@twipet.com', 'Communication', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Bridget Mcnally', 'Bridget_Mcnally3876@twipet.com', 'Work Under Pressure', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Daron Dickson', 'Daron_Dickson4822@grannar.com', 'Self-motivation', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Gabriel Rogers', 'Gabriel_Rogers7512@muall.tech', 'Conflict Resolution', 'completed');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Sadie Harper', 'Sadie_Harper3427@brety.org', 'Communication', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Penelope Murray', 'Penelope_Murray4693@corti.com', 'Conflict Resolution', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Gemma Clarke', 'Gemma_Clarke6628@nickia.com', 'Communication', 'completed');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Angela Kennedy', 'Angela_Kennedy4750@gembat.biz', 'Time Management', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Kieth Upsdell', 'Kieth_Upsdell6461@bauros.biz', 'Self-motivation', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Nate Watson', 'Nate_Watson5594@irrepsy.com', 'Conflict Resolution', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Harvey Raven', 'Harvey_Raven679@hourpy.biz', 'Work Under Pressure', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Mark Kirby', 'Mark_Kirby9869@twipet.com', 'Adaptability', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Roger Ulyatt', 'Roger_Ulyatt5303@vetan.org', 'Learning', 'completed');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Benjamin Harper', 'Benjamin_Harper7436@atink.com', 'Communication', 'completed');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Mackenzie Corbett', 'Mackenzie_Corbett1972@nimogy.biz', 'Decision Making', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Mya Woodley', 'Mya_Woodley3765@infotech44.tech', 'Work Under Pressure', 'completed');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Owen Atkinson', 'Owen_Atkinson4469@cispeto.com', 'Teamwork', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Shay Rust', 'Shay_Rust8638@acrit.org', 'Conflict Resolution', 'active');
-			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES (NULL, 'Celina Hamilton', 'Celina_Hamilton6744@elnee.tech', 'Decision Making', 'active');
+			INSERT INTO $table (`id`, `username`, `email`, `description`, `state`) VALUES
+			(NULL, 'Gabriel James', 'Gabriel_James7570@acrit.org', 'Time Management', 'completed'),
+			(NULL, 'Danny Smith', 'Danny_Smith2221@yahoo.com', 'Time Management', 'active'),
+			(NULL, 'Juliette Walker', 'Juliette_Walker4851@twipet.com', 'Communication', 'active'),
+			(NULL, 'Bridget Mcnally', 'Bridget_Mcnally3876@twipet.com', 'Work Under Pressure', 'active'),
+			(NULL, 'Daron Dickson', 'Daron_Dickson4822@grannar.com', 'Self-motivation', 'active'),
+			(NULL, 'Gabriel Rogers', 'Gabriel_Rogers7512@muall.tech', 'Conflict Resolution', 'completed'),
+			(NULL, 'Sadie Harper', 'Sadie_Harper3427@brety.org', 'Communication', 'active'),
+			(NULL, 'Penelope Murray', 'Penelope_Murray4693@corti.com', 'Conflict Resolution', 'active'),
+			(NULL, 'Gemma Clarke', 'Gemma_Clarke6628@nickia.com', 'Communication', 'completed'),
+			(NULL, 'Angela Kennedy', 'Angela_Kennedy4750@gembat.biz', 'Time Management', 'active'),
+			(NULL, 'Kieth Upsdell', 'Kieth_Upsdell6461@bauros.biz', 'Self-motivation', 'active'),
+			(NULL, 'Nate Watson', 'Nate_Watson5594@irrepsy.com', 'Conflict Resolution', 'active'),
+			(NULL, 'Harvey Raven', 'Harvey_Raven679@hourpy.biz', 'Work Under Pressure', 'active'),
+			(NULL, 'Mark Kirby', 'Mark_Kirby9869@twipet.com', 'Adaptability', 'active'),
+			(NULL, 'Roger Ulyatt', 'Roger_Ulyatt5303@vetan.org', 'Learning', 'completed'),
+			(NULL, 'Benjamin Harper', 'Benjamin_Harper7436@atink.com', 'Communication', 'completed'),
+			(NULL, 'Mackenzie Corbett', 'Mackenzie_Corbett1972@nimogy.biz', 'Decision Making', 'active'),
+			(NULL, 'Mya Woodley', 'Mya_Woodley3765@infotech44.tech', 'Work Under Pressure', 'completed'),
+			(NULL, 'Owen Atkinson', 'Owen_Atkinson4469@cispeto.com', 'Teamwork', 'active'),
+			(NULL, 'Shay Rust', 'Shay_Rust8638@acrit.org', 'Conflict Resolution', 'active'),
+			(NULL, 'Celina Hamilton', 'Celina_Hamilton6744@elnee.tech', 'Decision Making', 'active');
 		";
 
 		$this->stmt = $this->pdo->prepare($sql);
 
 		$result = $this->pdo->exec($this->stmt->queryString);
-
+		
 		if ($result === false) {
 			exit(__METHOD__.' failed<br>');
 		}
